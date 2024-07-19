@@ -16,8 +16,8 @@ export default function Todos({ todos }) {
       aria-label="Tareas"
       className="md:max-h-[calc(100svh-40px)] md:overflow-x-hidden md:overflow-y-auto"
     >
-      <div>
-        <div className="sticky top-0 pb-5 bg-background md:mr-3">
+      <div className="" >
+        <div className="sticky top-0 md:mr-3">
           <div className="bg-card-background rounded-md px-5 py-4">
             <h1 className="text-3xl font-semibold">TO DO</h1>
             <TodoCounter complete={0} total={todos.length} />
@@ -26,7 +26,7 @@ export default function Todos({ todos }) {
           </div>
         </div>
 
-        <div className="rounded-lg">
+        <div className="">
           <TodoList>
             {todos.map((todo, index) => (
               <TodoItem key={index} todo={todo} />
