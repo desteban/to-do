@@ -3,6 +3,7 @@ import TodoCounter from "./TodoCounter";
 import TodoItem from "./TodoItem";
 import TodoList from "./TodoList";
 import TodoSearch from "./TodoSearch";
+import estilos from "./Scroll.module.css";
 
 /**
  *
@@ -20,7 +21,7 @@ export default function Todos({ todos }) {
         <TodoSearch />
       </div>
 
-      <div className="overflow-x-auto w-full md:mt-5 pb-16 md:pb-0 snap-y scroll-m-0 transition-all duration-300">
+      <div className={`${estilos.listado} ${estilos["custom-scroll"]}`}>
         <div className="overflow-hidden">
           <TodoList>
             {todos.map((todo, index) => (
