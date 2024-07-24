@@ -1,5 +1,4 @@
 import CreateTodoButton from "./CreateTodoButton";
-import { Todo } from "./Todo";
 import TodoCounter from "./TodoCounter";
 import TodoItem from "./TodoItem";
 import TodoList from "./TodoList";
@@ -11,22 +10,18 @@ import TodoSearch from "./TodoSearch";
  * @param {Todo[]} props.todos
  */
 export default function Todos({ todos }) {
+  let todosComplete = todos.filter((todo) => todo.complete).length;
+
   return (
-    <section
-      aria-label="Tareas"
-      className="md:max-h-[calc(100svh-40px)] md:overflow-x-hidden md:overflow-y-auto"
-    >
-      <div className="" >
-        <div className="sticky top-0 md:mr-3">
-          <div className="bg-card-background rounded-md px-5 py-4">
-            <h1 className="text-3xl font-semibold">TO DO</h1>
-            <TodoCounter complete={0} total={todos.length} />
+    <section className="h-svh overflow-hidden flex flex-col md:items-center md:justify-center md:py-5">
+      <div className="w-full bg-card-background md:bg-opacity-50 rounded-b-lg md:rounded-lg px-5 py-4 top-0 md:min-w-[450px]">
+        <h1 className="text-3xl font-semibold text-center">TO DO</h1>
+        <TodoCounter complete={todosComplete} total={todos.length} />
+        <TodoSearch />
+      </div>
 
-            <TodoSearch />
-          </div>
-        </div>
-
-        <div className="">
+      <div className="overflow-x-auto w-full md:mt-5 pb-16 md:pb-0 snap-y scroll-m-0 transition-all duration-300">
+        <div className="overflow-hidden">
           <TodoList>
             {todos.map((todo, index) => (
               <TodoItem key={index} todo={todo} />

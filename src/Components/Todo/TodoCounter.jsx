@@ -11,16 +11,16 @@ import React from "react";
 export default function TodoCounter({ total, complete }) {
   if (total === 0) {
     return (
-      <div>
+      <div className="text-center my-4">
         <h2>Actualmente no tienes tarea</h2>
         <p>Parece que no tienes tareas, puedes agregar una tarea nueva</p>
       </div>
     );
   }
   return (
-    <div>
+    <div className="text-center my-4">
       <h2>
-        Has completado {complete} de {total} tareas.
+        Has completado <b>{complete}</b> de {total} tareas.
       </h2>
     </div>
   );

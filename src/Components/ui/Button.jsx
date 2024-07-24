@@ -4,10 +4,11 @@ import React from "react";
  *
  * @param {object} props
  * @param {React.ReactNode} props.children
+ * @param {string} props.className
  * @param {boolean} props.full
  * @returns
  */
-export default function Button({ children, full = true }) {
+export default function Button({ children, full = true, className = '' }) {
   return (
     <button
       className={`${
