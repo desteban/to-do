@@ -3,7 +3,6 @@ import "./App.css";
 import { PlusIcon } from "./Components/Icons/PlusIcon";
 import CreateTodoButton from "./Components/Todo/CreateTodoButton";
 import { Todo } from "./Components/Todo/Todo";
-import Todos from "./Components/Todo/Todos";
 import Button from "./Components/ui/Button";
 import TodoCounter from "./Components/Todo/TodoCounter";
 import TodoSearch from "./Components/Todo/TodoSearch";
@@ -23,6 +22,7 @@ const todosDefaults = [
 function App() {
   const [searchTitle, setSearchTitle] = useState("");
   const [todos, setTodos] = useState(todosDefaults ?? []);
+  const [titleTodo, setTitleTodo] = useState("");
   let todosComplete = todos.filter((todo) => todo.complete).length;
 
   /**
@@ -30,7 +30,14 @@ function App() {
    */
   const AddTodo = (e) => {
     e.preventDefault();
-    alert("agregando");
+    if (titleTodo.length == 0) {
+      alert('Debe poner un titulo a la tarea')
+      return
+    }
+    
+    let auxTodo = [...todos];
+    auxTodo.push({ complete: false, title: titleTodo });
+    setTodos(auxTodo);
   };
 
   /**
@@ -72,12 +79,14 @@ function App() {
                 name="title"
                 placeholder="Tarea"
                 className="px-2 py-2 border-2 rounded-lg"
+                value={titleTodo}
+                onChange={(e) => setTitleTodo(e.target.value)}
               />
             </label>
 
             <Button className="w-full flex items-center justify-center">
               <p className="w-full flex items-center justify-center cursor-pointer">
-                Agregar{" "}
+                Agregar
                 <span className="mx-2">
                   <PlusIcon />
                 </span>
