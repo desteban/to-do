@@ -5,6 +5,10 @@ import CreateTodoButton from "./Components/Todo/CreateTodoButton";
 import { Todo } from "./Components/Todo/Todo";
 import Todos from "./Components/Todo/Todos";
 import Button from "./Components/ui/Button";
+import TodoCounter from "./Components/Todo/TodoCounter";
+import TodoSearch from "./Components/Todo/TodoSearch";
+import TodoList from "./Components/Todo/TodoList";
+import TodoItem from "./Components/Todo/TodoItem";
 
 /**
  * @type {Todo[]}
@@ -18,10 +22,8 @@ const todosDefaults = [
 
 function App() {
   const [searchTitle, setSearchTitle] = useState("");
-  /**
-   * @type {Todo[]}
-   */
   const [todos, setTodos] = useState(todosDefaults ?? []);
+  let todosComplete = todos.filter((todo) => todo.complete).length;
 
   /**
    * @param {React.FormEvent<HTMLFormElement>} e
@@ -30,6 +32,26 @@ function App() {
     e.preventDefault();
     alert("agregando");
   };
+
+  /**
+   *
+   * @param {number} index indice a eliminar del arreglo de TODOS
+   */
+  const DeleteTodo = (index) => {
+    let auxTodos = [...todos];
+    auxTodos.splice(index, 1);
+    setTodos(auxTodos);
+  };
+
+  const CheckTodo = (index) => {
+    let auxTodos = [...todos];
+    auxTodos[index].complete = true;
+    setTodos(auxTodos);
+  };
+
+  const SearchedTodos = todos.filter((todo) =>
+    todo.title.toLocaleUpperCase().includes(searchTitle.toLocaleUpperCase())
+  );
 
   return (
     <main className="bg-background md:max-h-svh bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
@@ -64,11 +86,35 @@ function App() {
           </form>
         </div>
 
-        <Todos
-          todos={todos}
-          searchTitle={searchTitle}
-          setSearchTitle={setSearchTitle}
-        />
+        <section className="h-svh overflow-hidden flex flex-col md:items-center md:justify-center md:py-5">
+          <div className="w-full bg-card-background md:bg-opacity-50 rounded-b-lg md:rounded-lg px-5 py-4 top-0 md:min-w-[450px]">
+            <h1 className="text-3xl font-semibold text-center">TO DO</h1>
+            <TodoCounter complete={todosComplete} total={todos.length} />
+            <TodoSearch
+              searchTitle={searchTitle}
+              setSearchTitle={setSearchTitle}
+              FindTodos={SearchedTodos}
+            />
+          </div>
+
+          <div className={"custom-scroll p-1 w-full"}>
+            <div className="overflow-hidden p-1">
+              <TodoList>
+                {SearchedTodos.map((todo, index) => (
+                  <TodoItem
+                    key={index}
+                    todo={todo}
+                    index={index}
+                    DeleteTodo={DeleteTodo}
+                    CheckTodo={CheckTodo}
+                  />
+                ))}
+              </TodoList>
+            </div>
+
+            {/* <CreateTodoButton /> */}
+          </div>
+        </section>
         <CreateTodoButton />
       </div>
     </main>

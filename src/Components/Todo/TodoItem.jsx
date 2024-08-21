@@ -4,16 +4,23 @@ import { TrashIcon } from "../Icons/TrashIcon";
 import { CheckItem } from "../Icons/CheckItem";
 import { DoubleCheckIcon } from "../Icons/DoubleCheckIcon";
 
-const stylesDefaultIcon = "size-7 p-1 rounded-full transition duration-200 hover:bg-neutral-300";
+const stylesDefaultIcon =
+  "size-7 p-1 rounded-full transition duration-200 hover:bg-neutral-300";
 
 /**
  *
  * @param {Object} props
+ * @param {number} props.index
  * @param {Todo} props.todo
+ * @param {() => void} props.DeleteTodo
+ * @param {(index) => void} props.CheckTodo
  * @returns
  */
 export default function TodoItem({
   todo = new Todo("Nombre de la tarea", false),
+  index,
+  DeleteTodo,
+  CheckTodo = (index) => {},
 }) {
   const IsCompleted = () => {
     if (!todo.complete) {
@@ -22,7 +29,9 @@ export default function TodoItem({
 
     return (
       <div>
-        <DoubleCheckIcon className={`${stylesDefaultIcon} text-blue-500 hover:bg-inherit`} />
+        <DoubleCheckIcon
+          className={`${stylesDefaultIcon} text-blue-500 hover:bg-inherit`}
+        />
       </div>
     );
   };
@@ -60,8 +69,20 @@ export default function TodoItem({
         </h3>
       </div>
       <div className={`flex gap-2`}>
-        <TrashIcon className={`${stylesDefaultIcon} text-red-600`} />
-        <Checked />
+        <button
+          onClick={() => {
+            DeleteTodo(index);
+          }}
+        >
+          <TrashIcon className={`${stylesDefaultIcon} text-red-600`} />
+        </button>
+        <button
+          onClick={() => {
+            CheckTodo(index);
+          }}
+        >
+          <Checked />
+        </button>
       </div>
     </div>
   );
