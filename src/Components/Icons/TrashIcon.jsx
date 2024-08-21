@@ -1,11 +1,10 @@
-
 /**
- * 
- * @param {object} props 
+ *
+ * @param {object} props
  * @param {string | number} props.height
  * @param {string | number} props.width
  * @param {string} props.className
- * @returns 
+ * @returns
  */
 export function TrashIcon(props) {
   return (
