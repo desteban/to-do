@@ -8,22 +8,13 @@ import TodoCounter from "./Components/Todo/TodoCounter";
 import TodoSearch from "./Components/Todo/TodoSearch";
 import TodoList from "./Components/Todo/TodoList";
 import TodoItem from "./Components/Todo/TodoItem";
-
-const GetTodosLocal = () => {
-  const todosLocal = localStorage.getItem("todos");
-
-  if (!todosLocal || todosLocal.length === 0) {
-    return [];
-  }
-
-  return JSON.parse(todosLocal);
-};
+import useLocalStorage from "./hooks/LocalStorage";
 
 function App() {
   /**
    * @type {Todo[]}
    */
-  const [todos, setTodos] = useState(GetTodosLocal);
+  const [todos, setTodos] = useLocalStorage("todos", []);
   const [searchTitle, setSearchTitle] = useState("");
   const [titleTodo, setTitleTodo] = useState("");
   let todosComplete = todos.filter((todo) => todo.complete).length;
