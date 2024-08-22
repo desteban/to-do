@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import { PlusIcon } from "./Components/Icons/PlusIcon";
 import CreateTodoButton from "./Components/Todo/CreateTodoButton";
@@ -9,35 +9,43 @@ import TodoSearch from "./Components/Todo/TodoSearch";
 import TodoList from "./Components/Todo/TodoList";
 import TodoItem from "./Components/Todo/TodoItem";
 
-/**
- * @type {Todo[]}
- */
-const todosDefaults = [
-  { complete: false, title: "Caminar" },
-  { complete: false, title: "Terminar cursos" },
-  { complete: false, title: "Verificar el SO" },
-  { complete: true, title: "Beber agua" },
-];
+const GetTodosLocal = () => {
+  const todosLocal = localStorage.getItem("todos");
+
+  if (!todosLocal || todosLocal.length === 0) {
+    return [];
+  }
+
+  return JSON.parse(todosLocal);
+};
 
 function App() {
+  /**
+   * @type {Todo[]}
+   */
+  const [todos, setTodos] = useState(GetTodosLocal);
   const [searchTitle, setSearchTitle] = useState("");
-  const [todos, setTodos] = useState(todosDefaults ?? []);
   const [titleTodo, setTitleTodo] = useState("");
   let todosComplete = todos.filter((todo) => todo.complete).length;
+
+  useEffect(() => {
+    localStorage.setItem("todos", JSON.stringify(todos));
+  }, [todos]);
 
   /**
    * @param {React.FormEvent<HTMLFormElement>} e
    */
   const AddTodo = (e) => {
     e.preventDefault();
-    if (titleTodo.length == 0) {
-      alert('Debe poner un titulo a la tarea')
-      return
+    if (titleTodo.length === 0) {
+      alert("Debe poner un titulo a la tarea");
+      return;
     }
-    
+
     let auxTodo = [...todos];
     auxTodo.push({ complete: false, title: titleTodo });
     setTodos(auxTodo);
+    setTitleTodo("");
   };
 
   /**

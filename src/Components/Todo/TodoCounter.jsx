@@ -1,12 +1,11 @@
 import React from "react";
 
-
 /**
- * 
- * @param {object} props 
+ *
+ * @param {object} props
  * @param {number} props.total Total de tareas del usuario
  * @param {number} props.complete Cantidad de tareas completadas por el usuario
- * @returns 
+ * @returns
  */
 export default function TodoCounter({ total, complete }) {
   if (total === 0) {
