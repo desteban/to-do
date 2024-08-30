@@ -61,8 +61,8 @@ function App() {
 
   return (
     <main className="bg-background md:max-h-svh bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
-      <div className="container mx-auto min-h-svh md:flex md:gap-7 md:justify-center">
-        <div className="hidden py-4 md:h-svh md:flex md:items-center md:justify-center">
+      <div className="sm:container mx-auto min-h-svh md:flex md:gap-2 md:justify-center lg:gap-7">
+        <div className="hidden py-4 md:h-svh md:flex md:items-center md:justify-center md:px-2">
           <form
             className="bg-white px-5 py-4 rounded-xl min-w-[400px]"
             onSubmit={AddTodo}
@@ -94,8 +94,8 @@ function App() {
           </form>
         </div>
 
-        <section className="h-svh overflow-hidden flex flex-col md:items-center md:justify-center md:py-5">
-          <div className="w-full bg-card-background md:bg-opacity-50 rounded-b-lg md:rounded-lg px-5 py-4 top-0 md:min-w-[450px]">
+        <section className="h-svh overflow-hidden flex flex-col md:items-center md:justify-center md:py-5 md:px-2">
+          <div className="w-full bg-card-background md:bg-opacity-50 rounded-b-lg md:rounded-lg px-5 py-4 top-0 lg:min-w-[450px]">
             <h1 className="text-3xl font-semibold text-center">TO DO</h1>
             <TodoCounter complete={todosComplete} total={todos.length} />
             <TodoSearch

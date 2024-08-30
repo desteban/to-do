@@ -22,13 +22,16 @@ export default function TodoItem({
   DeleteTodo,
   CheckTodo = (index) => {},
 }) {
+  /**
+   * Valida si la tarea ya fue hecha
+   */
   const IsCompleted = () => {
     if (!todo.complete) {
       return null;
     }
 
     return (
-      <div>
+      <div className="" >
         <DoubleCheckIcon
           className={`${stylesDefaultIcon} text-blue-500 hover:bg-inherit`}
         />
@@ -50,14 +53,14 @@ export default function TodoItem({
 
   return (
     <div
-      className={`transition duration-300 px-4 py-5 rounded-md mx-2 md:ml-0 md:mr-3 relative flex gap-2 ${
+      className={`transition duration-300 px-4 py-5 rounded-md mx-2 md:mx-0  relative flex gap-2 justify-between md:justify-between ${
         todo.complete
           ? "bg-neutral-100 bg-opacity-50"
           : "hover:bg-neutral-100 hover:bg-opacity-90 hover:shadow-md bg-card-background bg-opacity-50"
       }`}
     >
+      <div className="relative max-w-[80%} flex">
       <IsCompleted />
-      <div className="relative min-w-[70%]">
         <h3
           className={`text-inherit font-semibold text-lg ${
             todo.complete
@@ -68,7 +71,7 @@ export default function TodoItem({
           {todo.title}
         </h3>
       </div>
-      <div className={`flex gap-2`}>
+      <div className={`flex w-14 justify-center`}>
         <button
           onClick={() => {
             DeleteTodo(index);
