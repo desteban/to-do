@@ -9,6 +9,7 @@ import TodoSearch from "./Components/Todo/TodoSearch";
 import TodoList from "./Components/Todo/TodoList";
 import TodoItem from "./Components/Todo/TodoItem";
 import useLocalStorage from "./hooks/LocalStorage";
+import CloseIcon from "./Components/Icons/CloseIcon";
 
 function App() {
   /**
@@ -18,6 +19,9 @@ function App() {
   const [searchTitle, setSearchTitle] = useState("");
   const [titleTodo, setTitleTodo] = useState("");
   let todosComplete = todos.filter((todo) => todo.complete).length;
+  const [showModal, setShowMOdal] = useState(false);
+  const showModalClass = "max-md:!flex max-md:absolute max-md:top-0 max-md:left-0 max-md:z-50 max-md:bg-slate-700 max-md:bg-opacity-85 max-md:w-svw"
+
 
   useEffect(() => {
     localStorage.setItem("todos", JSON.stringify(todos));
@@ -59,14 +63,21 @@ function App() {
     todo.title.toLocaleUpperCase().includes(searchTitle.toLocaleUpperCase())
   );
 
+  const HandleModal = () => {
+    setShowMOdal(!showModal);
+  }
+
   return (
     <main className="bg-background md:max-h-svh bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
       <div className="sm:container mx-auto min-h-svh md:flex md:gap-2 md:justify-center lg:gap-7">
-        <div className="hidden py-4 md:h-svh md:flex md:items-center md:justify-center md:px-2">
+        <div className={`hidden py-4 h-svh md:flex items-center justify-center ${showModal ? showModalClass : ''}  md:px-2`}>
           <form
-            className="bg-white px-5 py-4 rounded-xl min-w-[400px]"
+            className="bg-white px-5 py-4 rounded-xl min-w-[400px] relative"
             onSubmit={AddTodo}
           >
+            <button type="button" className="absolute top-2 right-4 md:hidden" onClick={HandleModal}>
+              <CloseIcon />
+            </button>
             <h2 className="text-2xl font-semibold mb-4 text-center">
               Agregar tareas
             </h2>
@@ -83,7 +94,7 @@ function App() {
               />
             </label>
 
-            <Button className="w-full flex items-center justify-center">
+            <Button className="w-full flex items-center justify-center" type="submit">
               <p className="w-full flex items-center justify-center cursor-pointer">
                 Agregar
                 <span className="mx-2">
@@ -105,8 +116,7 @@ function App() {
             />
           </div>
 
-          <div className={"custom-scroll p-1 w-full"}>
-            <div className="overflow-hidden p-1">
+          <div className={"custom-scroll overflow-auto mt-3 px-1 w-full"}>  
               <TodoList>
                 {SearchedTodos.map((todo, index) => (
                   <TodoItem
@@ -118,12 +128,9 @@ function App() {
                   />
                 ))}
               </TodoList>
-            </div>
-
-            {/* <CreateTodoButton /> */}
           </div>
         </section>
-        <CreateTodoButton />
+        <CreateTodoButton click={HandleModal}/>
       </div>
     </main>
   );

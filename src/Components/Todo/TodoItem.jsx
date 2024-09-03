@@ -31,7 +31,7 @@ export default function TodoItem({
     }
 
     return (
-      <div className="" >
+      <div className="">
         <DoubleCheckIcon
           className={`${stylesDefaultIcon} text-blue-500 hover:bg-inherit`}
         />
@@ -51,42 +51,49 @@ export default function TodoItem({
     );
   };
 
+  const TaskTitle = () => (
+    <h3
+      className={`text-inherit font-semibold text-lg ${
+        todo.complete
+          ? "text-gray-400 before:h-[2px] before:w-full before:bg-gray-400 before:absolute before:top-1/2 before:bottom-1/2 before:left-0"
+          : ""
+      }`}
+    >
+      {todo.title}
+    </h3>
+  );
+
+  const Buttons = () =>       <div className={`flex w-14 justify-center`}>
+  <button
+    onClick={() => {
+      DeleteTodo(index);
+    }}
+  >
+    <TrashIcon className={`${stylesDefaultIcon} text-red-600`} />
+  </button>
+  <button
+    onClick={() => {
+      CheckTodo(index);
+    }}
+  >
+    <Checked />
+  </button>
+</div>
+
   return (
     <div
-      className={`transition duration-300 px-4 py-5 rounded-md mx-2 md:mx-0  relative flex gap-2 justify-between md:justify-between ${
+      className={`transition duration-300 px-4 py-5 rounded-md mx-2 md:mx-0 relative flex gap-2 justify-between md:justify-between ${
         todo.complete
           ? "bg-neutral-100 bg-opacity-50"
-          : "hover:bg-neutral-100 hover:bg-opacity-90 hover:shadow-md bg-card-background bg-opacity-50"
+          : "hover:bg-neutral-100 hover:bg-opacity-90 hover:shadow-md bg-card-background bg-opacity-50 hover:z-20"
       }`}
     >
       <div className="relative max-w-[80%} flex">
-      <IsCompleted />
-        <h3
-          className={`text-inherit font-semibold text-lg ${
-            todo.complete
-              ? "text-gray-400 before:h-[2px] before:w-full before:bg-gray-400 before:absolute before:top-1/2 before:bottom-1/2 before:left-0"
-              : ""
-          }`}
-        >
-          {todo.title}
-        </h3>
+        <IsCompleted />
+        <TaskTitle />
       </div>
-      <div className={`flex w-14 justify-center`}>
-        <button
-          onClick={() => {
-            DeleteTodo(index);
-          }}
-        >
-          <TrashIcon className={`${stylesDefaultIcon} text-red-600`} />
-        </button>
-        <button
-          onClick={() => {
-            CheckTodo(index);
-          }}
-        >
-          <Checked />
-        </button>
-      </div>
+
+      <Buttons />
     </div>
   );
 }
