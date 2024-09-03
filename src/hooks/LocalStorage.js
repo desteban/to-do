@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 /**
  *
@@ -9,12 +9,15 @@ export default function useLocalStorage(key, initial = null) {
   const data = localStorage.getItem(key);
   let parsedData;
 
-  if (!data || data.length === 0) {
+  if (!data) {
     parsedData = initial;
   }
 
-  parsedData = JSON.parse(data);
-  const [item, setItem] = React.useState(parsedData);
+  if (data) {
+    parsedData = JSON.parse(data);
+  }
+
+  const [item, setItem] = useState(parsedData);
 
   const SaveItem = (newItem) => {
     localStorage.setItem(key, JSON.stringify(newItem));
