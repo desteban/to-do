@@ -1,28 +1,42 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 /**
+ * Almacena y recupera datos en el almacenamiento local del navegador.
  *
- * @param {string} key Key a buscar en el localstorage
- * @param {any} [initial=null] Valor que tendrá la key si no se encuentra
+ * Este hook personalizado gestiona la persistencia de datos en el local storage de forma sencilla y eficiente.
+ *
+ * @param {string} key La clave única para identificar el dato en el local storage.
+ * @param {*} initial El valor inicial del dato, si no existe en el local storage.
+ * @returns {{ item: *, setItem: (newItem: *) => void, loading: boolean, error: null }}
  */
 export default function useLocalStorage(key, initial = null) {
-  const data = localStorage.getItem(key);
-  let parsedData;
+  const [item, setItem] = useState(initial);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  if (!data) {
-    parsedData = initial;
-  }
-
-  if (data) {
-    parsedData = JSON.parse(data);
-  }
-
-  const [item, setItem] = useState(parsedData);
+  useEffect(() => {
+    try {
+      const data = localStorage.getItem(key);
+      if (data) {
+        setItem(JSON.parse(data));
+      }
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      console.error(error);
+      setError(error);
+    }
+  }, []);
 
   const SaveItem = (newItem) => {
     localStorage.setItem(key, JSON.stringify(newItem));
     setItem(newItem);
   };
 
-  return [item, SaveItem];
+  return {
+    item,
+    setItem,
+    loading,
+    error,
+  };
 }

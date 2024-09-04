@@ -11,7 +11,7 @@ export default function TodoCounter({ total, complete }) {
   if (total === 0) {
     return (
       <div className="text-center my-4">
-        <h2>Actualmente no tienes tareas</h2>
+        <h2 className="font-bold" >Actualmente no tienes tareas</h2>
         <p>Parece que no tienes tareas, puedes agregar una tarea nueva</p>
       </div>
     );
