@@ -1,16 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { SearchIcon } from "../Icons/SearchIcon";
+import { TodoContext } from "../../contexts/TodoContext";
 
-/**
- * 
- * @param {object} props
- * @param {string} props.searchTitle
- * @param {(value) => void} props.setSearchTitle
- * @param {() => void} props.FindTodos
- * @returns 
- */
-export default function TodoSearch({searchTitle, setSearchTitle, FindTodos = () => {}}) {
 
+export default function TodoSearch() {
+ const { searchTitle, setSearchTitle, SearchTodos } = useContext(TodoContext)
   /**
    *
    * @param {React.ChangeEvent<HTMLInputElement>} event
@@ -34,12 +28,13 @@ export default function TodoSearch({searchTitle, setSearchTitle, FindTodos = () 
           className="text-lg rounded-l-2xl px-2 py-1 bg-inherit appearance-none outline-blue-700 w-full"
           value={searchTitle}
           onChange={changeTitle}
+          autoComplete="OFF"
         />
       </div>
 
       <button className="pl-1 pr-3 bg-blue-700 flex items-center justify-center text-white" onClick={(e) => {
         e.preventDefault()
-        FindTodos()
+        SearchTodos()
       }} >
         <SearchIcon height={25} width={25} />
       </button>
