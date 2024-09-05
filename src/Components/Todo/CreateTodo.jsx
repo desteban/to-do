@@ -1,25 +1,38 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import CloseIcon from "../Icons/CloseIcon";
 import { PlusIcon } from "../Icons/PlusIcon";
 import Button from "../ui/Button";
 import CreateTodoButton from "./CreateTodoButton";
+import { TodoContext } from "../../contexts/TodoContext";
 
-/**
- *
- * @param {object} props
- * @param {string} props.titleTodo
- * @param {(titleTodo) => void} props.setTitleTodo
- *  @param {number} props.counterTodos
- * @param {() => void} props.onSubmit
- */
-export default function CreateTodo({ titleTodo, setTitleTodo, onSubmit, counterTodos }) {
+
+export default function CreateTodo() {
+  const { todos, setTodos } = useContext(TodoContext)
+  const [ titleTodo, setTitleTodo ] = useState('')
   const [showModal, setShowMOdal] = useState(false);
+  const counterTodos = todos.length
   const showModalClass =
     "max-md:!flex max-md:absolute max-md:top-0 max-md:left-0 max-md:z-50 max-md:bg-slate-700 max-md:bg-opacity-85 max-md:w-svw";
 
   const HandleModal = () => {
     setShowMOdal(!showModal);
   };
+
+    /**
+   * @param {React.FormEvent<HTMLFormElement>} e
+   */
+    const AddTodo = (e) => {
+      e.preventDefault();
+      if (titleTodo.length === 0) {
+        alert("Debe poner un titulo a la tarea");
+        return;
+      }
+  
+      let auxTodo = [...todos];
+      auxTodo.push({ complete: false, title: titleTodo });
+      setTodos(auxTodo);
+      setTitleTodo("");
+    };
 
   return (
     <>
@@ -30,7 +43,7 @@ export default function CreateTodo({ titleTodo, setTitleTodo, onSubmit, counterT
       >
         <form
           className="bg-white px-5 py-4 rounded-xl min-w-[400px] relative"
-          onSubmit={onSubmit}
+          onSubmit={AddTodo}
         >
           <button
             type="button"

@@ -11,7 +11,7 @@ export const TodoContext = createContext({
 });
 
 export function TodoContextProvider({ children }) {
-  const { item: todos, setItem: setTodos } = useLocalStorage("todos", []);
+  const { item: todos, SaveItem: setTodos } = useLocalStorage("todos", []);
   const [searchTitle, setSearchTitle] = useState("");
   const [searchedTodos, setSearchedTodos] = useState([])
 

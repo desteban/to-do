@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
  *
  * @param {string} key La clave única para identificar el dato en el local storage.
  * @param {*} initial El valor inicial del dato, si no existe en el local storage.
- * @returns {{ item: *, setItem: (newItem: *) => void, loading: boolean, error: null }}
+ * @returns {{ item: *, SaveItem: (newItem: *) => void, loading: boolean, error: null }}
  */
 export default function useLocalStorage(key, initial = null) {
   const [item, setItem] = useState(initial);
@@ -35,7 +35,7 @@ export default function useLocalStorage(key, initial = null) {
 
   return {
     item,
-    setItem,
+    SaveItem,
     loading,
     error,
   };
