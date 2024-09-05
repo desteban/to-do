@@ -1,13 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
+import { TodoContext } from "../../contexts/TodoContext";
 
-/**
- *
- * @param {object} props
- * @param {number} props.total Total de tareas del usuario
- * @param {number} props.complete Cantidad de tareas completadas por el usuario
- * @returns
- */
-export default function TodoCounter({ total, complete }) {
+export default function TodoCounter() {
+
+  const { todos } = useContext(TodoContext)
+  const total = todos.length
+  const complete = todos.filter(todo => todo.complete).length
+
   if (total === 0) {
     return (
       <div className="text-center my-4">

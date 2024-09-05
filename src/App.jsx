@@ -60,17 +60,17 @@ function App() {
       <main className="bg-background md:max-h-svh bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
         <div className="sm:container mx-auto min-h-svh md:flex md:gap-2 md:justify-center lg:gap-7">
           <CreateTodo
+            onSubmit={AddTodo}
+            setTitleTodo={setTitleTodo}
+            titleTodo={titleTodo}
+            counterTodos={todos.length}
           />
 
           <section className="h-svh overflow-hidden flex flex-col md:items-center md:justify-center md:py-5 md:px-2">
             <div className="w-full bg-card-background md:bg-opacity-50 rounded-b-lg md:rounded-lg px-5 py-4 top-0 lg:min-w-[450px]">
               <h1 className="text-3xl font-semibold text-center">TO DO</h1>
-              <TodoCounter complete={todosComplete} total={todos.length} />
-              <TodoSearch
-                searchTitle={searchTitle}
-                setSearchTitle={setSearchTitle}
-                FindTodos={SearchedTodos}
-              />
+              <TodoCounter />
+              <TodoSearch />
             </div>
 
             <div className={"custom-scroll overflow-auto mt-3 px-1 w-full"}>

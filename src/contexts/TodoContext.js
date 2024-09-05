@@ -13,17 +13,14 @@ export const TodoContext = createContext({
 export function TodoContextProvider({ children }) {
   const { item: todos, setItem: setTodos } = useLocalStorage("todos", []);
   const [searchTitle, setSearchTitle] = useState("");
-  const [searchedTodos, setSeachedTodos] = useState([])
-
-
-  useEffect(() => {}, [])
+  const [searchedTodos, setSearchedTodos] = useState([])
 
   const SearchTodos = () => {
     let findsTodos = todos.filter((todo) =>
       todo.title.toLocaleUpperCase().includes(searchTitle.toLocaleUpperCase())
     );
 
-    setSeachedTodos(findsTodos)    
+    setSearchedTodos(findsTodos)    
   }
 
   return (
