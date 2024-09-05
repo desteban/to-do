@@ -1,59 +1,11 @@
 import "./App.css";
-import { useEffect, useState } from "react";
-import { Todo } from "./Components/Todo/Todo";
 import TodoCounter from "./Components/Todo/TodoCounter";
 import TodoSearch from "./Components/Todo/TodoSearch";
 import TodoList from "./Components/Todo/TodoList";
-import TodoItem from "./Components/Todo/TodoItem";
-import useLocalStorage from "./hooks/LocalStorage";
 import CreateTodo from "./Components/Todo/CreateTodo";
 import { TodoContextProvider } from "./contexts/TodoContext";
 
 function App() {
-  const { item: todos, setItem: setTodos } = useLocalStorage("todos", []);
-  const [searchTitle, setSearchTitle] = useState("");
-  const [titleTodo, setTitleTodo] = useState("");
-  let todosComplete = todos.filter((todo) => todo.complete).length;
-
-  useEffect(() => {
-    localStorage.setItem("todos", JSON.stringify(todos));
-  }, [todos]);
-
-  /**
-   * @param {React.FormEvent<HTMLFormElement>} e
-   */
-  const AddTodo = (e) => {
-    e.preventDefault();
-    if (titleTodo.length === 0) {
-      alert("Debe poner un titulo a la tarea");
-      return;
-    }
-
-    let auxTodo = [...todos];
-    auxTodo.push({ complete: false, title: titleTodo });
-    setTodos(auxTodo);
-    setTitleTodo("");
-  };
-
-  /**
-   *
-   * @param {number} index indice a eliminar del arreglo de TODOS
-   */
-  const DeleteTodo = (index) => {
-    let auxTodos = [...todos];
-    auxTodos.splice(index, 1);
-    setTodos(auxTodos);
-  };
-
-  const CheckTodo = (index) => {
-    let auxTodos = [...todos];
-    auxTodos[index].complete = true;
-    setTodos(auxTodos);
-  };
-
-  const SearchedTodos = todos.filter((todo) =>
-    todo.title.toLocaleUpperCase().includes(searchTitle.toLocaleUpperCase())
-  );
 
   return (
     <TodoContextProvider>
