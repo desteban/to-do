@@ -1,14 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import TodoItem from "./TodoItem";
+import { TodoContext } from "../../contexts/TodoContext";
 
-/**
- *
- * @param {object} props Props para el funcionamiento del componente
- * @param {[]} props.todos Listado de tareas
- * @param {() => void} props.DeleteTodo
- * @param {() => void} props.CheckTodo
- */
-export default function TodoList({ todos, CheckTodo, DeleteTodo }) {
+
+export default function TodoList() {
+    const { todos, searchTitle, CheckTodo, DeleteTodo } = useContext(TodoContext)
+
+    const SearchedTodos = todos.filter((todo) =>
+      todo.title.toLocaleUpperCase().includes(searchTitle.toLocaleUpperCase())
+    );
+
   useEffect(() => {}, []);
 
   return (
@@ -29,7 +30,11 @@ export default function TodoList({ todos, CheckTodo, DeleteTodo }) {
         </div>
       ) : null}
 
-      {todos.map((todo, index) => (
+      {
+        SearchedTodos.map((todo, index) => <TodoItem key={index} todo={todo} index={index} CheckTodo={CheckTodo} DeleteTodo={DeleteTodo} />)
+      }
+
+      {/* {todos.map((todo, index) => (
         <TodoItem
           key={index}
           todo={todo}
@@ -37,7 +42,7 @@ export default function TodoList({ todos, CheckTodo, DeleteTodo }) {
           DeleteTodo={DeleteTodo}
           CheckTodo={CheckTodo}
         />
-      ))}
+      ))} */}
     </section>
   );
 }
